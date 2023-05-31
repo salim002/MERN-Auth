@@ -23,7 +23,7 @@ class authController
                     });
                     const resUser = await newUser.save();
                     if(resUser){
-                        return res.status(200).json({"message": "Registered successfully", user: resUser});
+                        return res.status(201).json({"message": "Registered successfully", user: resUser});
                     }
                     else{
                         return res.status(400).json({"message": "Some error occured while registering"});
@@ -47,7 +47,7 @@ class authController
                     if(await bcryptjs.compare(password, isUser.password)){
                         // return res.status(200).json(isUser);
                         const token = jwt.sign({userId: isUser._id}, "pleaseSubscribe", {expiresIn: "2d"});
-                        return res.status(200).json({message: "Logged In Successfully", token});
+                        return res.status(200).json({message: "Logged In Successfully", token, name: isUser.name});
                     }
                     else{
                         return res.status(400).json({message: "wrong email or password"});
